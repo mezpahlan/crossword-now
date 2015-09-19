@@ -1,5 +1,5 @@
 'use strict';
-
+require('env2')('./.config.env');
 var cfenv = require('cfenv');
 var appEnv = cfenv.getAppEnv();
 var data = require('./data.json');
@@ -44,7 +44,7 @@ var payload = function (xwordType) {
 
 var webhookResponse = function (xwordType) {
     request({
-        url: 'https://hooks.slack.com/services/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',
+        url: process.env.WEBHOOK_IN_URL,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -85,7 +85,7 @@ app.post('/', function (req, res) {
     }
 });
 
-var server = app.listen(appEnv.port || 3000, function () {
+var server = app.listen(appEnv.port, function () {
     var host = server.address().address;
     var port = server.address().port;
 
