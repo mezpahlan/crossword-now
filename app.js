@@ -61,12 +61,12 @@ var webhookResponse = function (xwordType) {
 
 var easy = function (req, res) {
     webhookResponse('easy');
-    res.sendStatus(200);
+    res.end();
 };
 
 var cryptic = function (req, res) {
     webhookResponse('cryptic');
-    res.sendStatus(200);
+    res.end();
 };
 
 // Routing
