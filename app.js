@@ -1,4 +1,5 @@
-/*eslint-env node*/
+'use strict';
+
 var cfenv = require('cfenv');
 var appEnv = cfenv.getAppEnv();
 var data = require('./data.json');
