@@ -1,0 +1,27 @@
+{
+    "name": "crossword-now",
+    "version": "0.1.0",
+    "description": "Crossword fetching Slack Bot.",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "test": "FIX ME WHEN YOU DECIDE TO UNIT TEST"
+    },
+    "repository": {
+        "type": "git",
+        "url": "FIX ME WHEN YOU DECIDE TO SAVE TO GIT"
+    },
+    "keywords": [
+    "slack",
+    "bot",
+    "nodejs"
+  ],
+    "author": "Mez Pahlan",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.13.3",
+        "body-parser": "^1.13.3",
+        "request": "^2.61.0",
+        "cfenv": "1.0.x"
+    }
+}

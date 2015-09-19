@@ -1,0 +1,66 @@
+{
+    "easy": [
+        {
+            "question": "Question easy 1 (2)",
+            "answer": "12",
+            "id": "unique_id_1"
+        },
+        {
+            "question": "Question easy 2 (3)",
+            "answer": "123",
+            "id": "unique_id_2"
+        },
+        {
+            "question": "Question easy 3 (4)",
+            "answer": "1234",
+            "id": "unique_id_3"
+        },
+        {
+            "question": "Question easy 4 (5)",
+            "answer": "12345",
+            "id": "unique_id_4"
+        },
+        {
+            "question": "Question easy 5 (6)",
+            "answer": "123456",
+            "id": "unique_id_5"
+        },
+        {
+            "question": "Question easy 6 (7)",
+            "answer": "1234567",
+            "id": "unique_id_6"
+        }
+  ],
+    "cryptic": [
+        {
+            "question": "Question cryptic 1 (2)",
+            "answer": "ab",
+            "id": "unique_id_7"
+        },
+        {
+            "question": "Question cryptic 2 (3)",
+            "answer": "abc",
+            "id": "unique_id_8"
+        },
+        {
+            "question": "Question cryptic 3 (4)",
+            "answer": "abcd",
+            "id": "unique_id_9"
+        },
+        {
+            "question": "Question cryptic 4 (5)",
+            "answer": "abcde",
+            "id": "unique_id_10"
+        },
+        {
+            "question": "Question cryptic 5 (6)",
+            "answer": "abcdef",
+            "id": "unique_id_11"
+        },
+        {
+            "question": "Question cryptic 6 (7)",
+            "answer": "abdcefg",
+            "id": "unique_id_12"
+        }
+  ]
+}
