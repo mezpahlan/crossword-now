@@ -4,18 +4,23 @@ var request = require('request');
 var helpers = require('./helpers');
 
 var payload = function (xwordType) {
-    console.log(data.xwordType);
-    var index = helpers.randomFromArray(data[xwordType]);
-    var xwordQuestion = data.easy[index].question;
-    var xwordId = data.easy[index].id;
+    var index, xwordNumber, id, xwordClue, xwordId;
+
+    console.log(xwordType); // TODO: Configure easy and cryptic types.
+    index = helpers.randomFromArray(data.entries);
+    xwordNumber = data.number.toString();
+    id = helpers.hash(data.entries[index].id);
+    xwordClue = data.entries[index].clue;
+    xwordId = xwordNumber.concat(id);
+
 
     // TODO: Return response to the channel that the command was invoked from. Could just be a case of removing the override.
     return JSON.stringify({
         channel: '@mez',
         attachments: [
             {
-                fallback: xwordQuestion + '. id: ' + xwordId,
-                text: xwordQuestion,
+                fallback: xwordClue + '. id: ' + xwordId,
+                text: xwordClue,
                 fields: [
                     {
                         title: 'id',
