@@ -1,7 +1,7 @@
 'use strict';
 // Return a random number from 0 to n-1
 exports.random = function (n) {
-    return Math.floor((Math.random() * n) - 1);
+    return Math.floor(Math.random() * n);
 };
 
 // Return a random index from an array
