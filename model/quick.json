@@ -1,0 +1,351 @@
+{
+    "id": "quick/14139",
+    "number": 14139,
+    "name": "Quick crossword No 14,139",
+    "date": 1441152000000,
+    "entries": [{
+        "id": "1-across",
+        "number": 1,
+        "humanNumber": "1",
+        "clue": "Concern solely for one's own welfare (11)",
+        "direction": "across",
+        "length": 11,
+        "group": ["1-across"],
+        "position": {
+            "x": 1,
+            "y": 0
+        },
+        "separatorLocations": {},
+        "solution": "SELFISHNESS"
+    }, {
+        "id": "9-across",
+        "number": 9,
+        "humanNumber": "9",
+        "clue": "Doctor specialising in the waterworks? (9)",
+        "direction": "across",
+        "length": 9,
+        "group": ["9-across"],
+        "position": {
+            "x": 0,
+            "y": 2
+        },
+        "separatorLocations": {},
+        "solution": "UROLOGIST"
+    }, {
+        "id": "10-across",
+        "number": 10,
+        "humanNumber": "10",
+        "clue": "Annoyance (3)",
+        "direction": "across",
+        "length": 3,
+        "group": ["10-across"],
+        "position": {
+            "x": 10,
+            "y": 2
+        },
+        "separatorLocations": {},
+        "solution": "IRE"
+    }, {
+        "id": "11-across",
+        "number": 11,
+        "humanNumber": "11",
+        "clue": "Stipulated requirements (5)",
+        "direction": "across",
+        "length": 5,
+        "group": ["11-across"],
+        "position": {
+            "x": 0,
+            "y": 4
+        },
+        "separatorLocations": {},
+        "solution": "TERMS"
+    }, {
+        "id": "13-across",
+        "number": 13,
+        "humanNumber": "13",
+        "clue": "Lord Ted (anag) (7)",
+        "direction": "across",
+        "length": 7,
+        "group": ["13-across"],
+        "position": {
+            "x": 6,
+            "y": 4
+        },
+        "separatorLocations": {},
+        "solution": "TODDLER"
+    }, {
+        "id": "14-across",
+        "number": 14,
+        "humanNumber": "14",
+        "clue": "Early enough (2,4)",
+        "direction": "across",
+        "length": 6,
+        "group": ["14-across"],
+        "position": {
+            "x": 0,
+            "y": 6
+        },
+        "separatorLocations": {
+            ",": [2]
+        },
+        "solution": "INTIME"
+    }, {
+        "id": "15-across",
+        "number": 15,
+        "humanNumber": "15",
+        "clue": "Running costs (6)",
+        "direction": "across",
+        "length": 6,
+        "group": ["15-across"],
+        "position": {
+            "x": 7,
+            "y": 6
+        },
+        "separatorLocations": {},
+        "solution": "UPKEEP"
+    }, {
+        "id": "18-across",
+        "number": 18,
+        "humanNumber": "18",
+        "clue": "Mediocre (7)",
+        "direction": "across",
+        "length": 7,
+        "group": ["18-across"],
+        "position": {
+            "x": 0,
+            "y": 8
+        },
+        "separatorLocations": {},
+        "solution": "AVERAGE"
+    }, {
+        "id": "20-across",
+        "number": 20,
+        "humanNumber": "20",
+        "clue": "Darkness (5)",
+        "direction": "across",
+        "length": 5,
+        "group": ["20-across"],
+        "position": {
+            "x": 8,
+            "y": 8
+        },
+        "separatorLocations": {},
+        "solution": "NIGHT"
+    }, {
+        "id": "21-across",
+        "number": 21,
+        "humanNumber": "21",
+        "clue": "Movable cover (3)",
+        "direction": "across",
+        "length": 3,
+        "group": ["21-across"],
+        "position": {
+            "x": 0,
+            "y": 10
+        },
+        "separatorLocations": {},
+        "solution": "LID"
+    }, {
+        "id": "22-across",
+        "number": 22,
+        "humanNumber": "22",
+        "clue": "Incognito (9)",
+        "direction": "across",
+        "length": 9,
+        "group": ["22-across"],
+        "position": {
+            "x": 4,
+            "y": 10
+        },
+        "separatorLocations": {},
+        "solution": "DISGUISED"
+    }, {
+        "id": "24-across",
+        "number": 24,
+        "humanNumber": "24",
+        "clue": "Transitory (11)",
+        "direction": "across",
+        "length": 11,
+        "group": ["24-across"],
+        "position": {
+            "x": 1,
+            "y": 12
+        },
+        "separatorLocations": {},
+        "solution": "IMPERMANENT"
+    }, {
+        "id": "2-down",
+        "number": 2,
+        "humanNumber": "2",
+        "clue": "One's image of oneself (3)",
+        "direction": "down",
+        "length": 3,
+        "group": ["2-down"],
+        "position": {
+            "x": 2,
+            "y": 0
+        },
+        "separatorLocations": {},
+        "solution": "EGO"
+    }, {
+        "id": "3-down",
+        "number": 3,
+        "humanNumber": "3",
+        "clue": "Floating wreckage (7)",
+        "direction": "down",
+        "length": 7,
+        "group": ["3-down"],
+        "position": {
+            "x": 4,
+            "y": 0
+        },
+        "separatorLocations": {},
+        "solution": "FLOTSAM"
+    }, {
+        "id": "4-down",
+        "number": 4,
+        "humanNumber": "4",
+        "clue": "Ill-tempered (informal) (6)",
+        "direction": "down",
+        "length": 6,
+        "group": ["4-down"],
+        "position": {
+            "x": 6,
+            "y": 0
+        },
+        "separatorLocations": {},
+        "solution": "SHIRTY"
+    }, {
+        "id": "5-down",
+        "number": 5,
+        "humanNumber": "5",
+        "clue": "Eminent (5)",
+        "direction": "down",
+        "length": 5,
+        "group": ["5-down"],
+        "position": {
+            "x": 8,
+            "y": 0
+        },
+        "separatorLocations": {},
+        "solution": "NOTED"
+    }, {
+        "id": "6-down",
+        "number": 6,
+        "humanNumber": "6",
+        "clue": "Director of Jaws (9)",
+        "direction": "down",
+        "length": 9,
+        "group": ["6-down"],
+        "position": {
+            "x": 10,
+            "y": 0
+        },
+        "separatorLocations": {},
+        "solution": "SPIELBERG"
+    }, {
+        "id": "7-down",
+        "number": 7,
+        "humanNumber": "7",
+        "clue": "Maintaining a balance by not depleting natural resources (11)",
+        "direction": "down",
+        "length": 11,
+        "group": ["7-down"],
+        "position": {
+            "x": 0,
+            "y": 1
+        },
+        "separatorLocations": {},
+        "solution": "SUSTAINABLE"
+    }, {
+        "id": "8-down",
+        "number": 8,
+        "humanNumber": "8",
+        "clue": "Feebleness of old age (11)",
+        "direction": "down",
+        "length": 11,
+        "group": ["8-down"],
+        "position": {
+            "x": 12,
+            "y": 1
+        },
+        "separatorLocations": {},
+        "solution": "DECREPITUDE"
+    }, {
+        "id": "12-down",
+        "number": 12,
+        "humanNumber": "12",
+        "clue": "Major world seaport at the mouth of the Meuse (9)",
+        "direction": "down",
+        "length": 9,
+        "group": ["12-down"],
+        "position": {
+            "x": 2,
+            "y": 4
+        },
+        "separatorLocations": {},
+        "solution": "ROTTERDAM"
+    }, {
+        "id": "16-down",
+        "number": 16,
+        "humanNumber": "16",
+        "clue": "Flightless bird (7)",
+        "direction": "down",
+        "length": 7,
+        "group": ["16-down"],
+        "position": {
+            "x": 8,
+            "y": 6
+        },
+        "separatorLocations": {},
+        "solution": "PENGUIN"
+    }, {
+        "id": "17-down",
+        "number": 17,
+        "humanNumber": "17",
+        "clue": "Goods jettisoned from a ship and washed up on shore (6)",
+        "direction": "down",
+        "length": 6,
+        "group": ["17-down"],
+        "position": {
+            "x": 6,
+            "y": 7
+        },
+        "separatorLocations": {},
+        "solution": "JETSAM"
+    }, {
+        "id": "19-down",
+        "number": 19,
+        "humanNumber": "19",
+        "clue": "Go bad (5)",
+        "direction": "down",
+        "length": 5,
+        "group": ["19-down"],
+        "position": {
+            "x": 4,
+            "y": 8
+        },
+        "separatorLocations": {},
+        "solution": "ADDLE"
+    }, {
+        "id": "23-down",
+        "number": 23,
+        "humanNumber": "23",
+        "clue": "Wickedness (3)",
+        "direction": "down",
+        "length": 3,
+        "group": ["23-down"],
+        "position": {
+            "x": 10,
+            "y": 10
+        },
+        "separatorLocations": {},
+        "solution": "SIN"
+    }],
+    "dimensions": {
+        "cols": 13,
+        "rows": 13
+    },
+    "crosswordType": "quick",
+    "pdf": "http://static.guim.co.uk/crosswords/pdfs/gdn.quick.20150902.pdf"
+}
