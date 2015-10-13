@@ -11,13 +11,14 @@ router.use(bodyParser.urlencoded({
 // Routing
 router.post('/', function (req, res) {
     var text = req.body.text;
-    res.end();
 
     switch (text) {
         case 'cryptic':
+            res.end();
             return crossword('cryptic');
         case 'quick':
         case '':
+            res.end();
             return crossword('quick');
         default:
             return res.json({
