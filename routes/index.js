@@ -16,12 +16,12 @@ router.post('/', function (req, res) {
     switch (text) {
         case 'cryptic':
             return crossword('cryptic');
-        case 'easy':
+        case 'quick':
         case '':
-            return crossword('easy');
+            return crossword('quick');
         default:
             return res.json({
-                text: 'Valid options are `easy` for an easy crossword, `cryptic` for a cryptic crossword or leave blank for an easy crossword.'
+                text: 'Valid options are `quick` for a quick crossword, `cryptic` for a cryptic crossword or leave blank for a quick crossword.'
             });
     }
 });
