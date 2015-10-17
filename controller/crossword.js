@@ -1,31 +1,39 @@
 'use strict';
-var data = require('../model/data.json');
+var data = require('../model/data');
 var request = require('request');
 var helpers = require('./helpers');
 
-var payload = function (xwordType) {
-    var index, xwordNumber, id, xwordClue, xwordId;
+var getData = function (xwordType, callback) {
+    data.getCrossword(xwordType, function (crossword) {
+        data.getEntry(crossword, function (entry, crosswordNumber) {
+            callback(entry, crosswordNumber.toString());
+        });
+    });
+};
 
-    console.log(xwordType); // TODO: Configure easy and cryptic types.
-    index = helpers.randomFromArray(data.entries);
-    xwordNumber = data.number.toString();
-    id = helpers.hash(data.entries[index].id);
-    xwordClue = data.entries[index].clue;
-    xwordId = xwordNumber.concat(id);
-
+var payload = function (randomEntry, crosswordNumber, xwordType) {
+    var entryId, xwordClue, xwordId;
+    entryId = helpers.hash(randomEntry.id);
+    xwordClue = randomEntry.clue;
+    xwordId = crosswordNumber.concat(entryId);
 
     // TODO: Return response to the channel that the command was invoked from. Could just be a case of removing the override.
     return JSON.stringify({
         channel: '@mez',
         attachments: [
             {
-                fallback: xwordClue + '. id: ' + xwordId,
+                fallback: xwordClue,
                 text: xwordClue,
                 fields: [
                     {
+                        title: 'type',
+                        value: xwordType,
+                        short: false
+                    },
+                    {
                         title: 'id',
                         value: xwordId,
-                        short: true
+                        short: false
                     }
                 ],
                 color: '#000'
@@ -34,14 +42,14 @@ var payload = function (xwordType) {
     });
 };
 
-var webhookResponse = function (xwordType) {
+var webhookResponse = function (randomEntry, crosswordNumber, xwordType) {
     request({
         url: process.env.WEBHOOK_IN_URL,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: payload(xwordType)
+        body: payload(randomEntry, crosswordNumber, xwordType)
     }, function (error, response, body) {
         if (error) {
             console.log(error);
@@ -52,16 +60,20 @@ var webhookResponse = function (xwordType) {
 };
 
 var cryptic = function () {
-    webhookResponse('cryptic');
+    getData('cryptic', function (entry, crosswordNumber) {
+        webhookResponse(entry, crosswordNumber, 'cryptic');
+    });
 };
 
-var easy = function () {
-    webhookResponse('easy');
+var quick = function () {
+    getData('quick', function (entry, crosswordNumber) {
+        webhookResponse(entry, crosswordNumber, 'quick');
+    });
 };
 
 var crossword = function (type) {
-    if (type === 'easy') {
-        return easy();
+    if (type === 'quick') {
+        return quick();
     } else if (type === 'cryptic') {
         return cryptic();
     }
