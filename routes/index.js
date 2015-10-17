@@ -11,15 +11,16 @@ router.use(bodyParser.urlencoded({
 // Routing
 router.post('/', function (req, res) {
     var text = req.body.text;
+    var channel = req.body.channel_name;
 
     switch (text) {
         case 'cryptic':
             res.end();
-            return crossword('cryptic');
+            return crossword('cryptic', channel);
         case 'quick':
         case '':
             res.end();
-            return crossword('quick');
+            return crossword('quick', channel);
         default:
             return res.json({
                 text: 'Valid options are `quick` for a quick crossword, `cryptic` for a cryptic crossword or leave blank for a quick crossword.'

@@ -2,6 +2,7 @@
 var data = require('../model/data');
 var request = require('request');
 var helpers = require('./helpers');
+var replyTo;
 
 var getData = function (xwordType, callback) {
     data.getCrossword(xwordType, function (crossword) {
@@ -19,7 +20,7 @@ var payload = function (randomEntry, crosswordNumber, xwordType) {
 
     // TODO: Return response to the channel that the command was invoked from. Could just be a case of removing the override.
     return JSON.stringify({
-        channel: '@mez',
+        channel: '#'.concat(replyTo),
         attachments: [
             {
                 fallback: xwordClue,
@@ -71,7 +72,9 @@ var quick = function () {
     });
 };
 
-var crossword = function (type) {
+var crossword = function (type, channel) {
+    replyTo = channel;
+
     if (type === 'quick') {
         return quick();
     } else if (type === 'cryptic') {
