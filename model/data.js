@@ -21,9 +21,8 @@ exports.getCrossword = function (xwordType, callback) {
         }).count().then(function (count) {
             var random = helpers.random(count);
 
-            var cursor = collection.find({
-            crosswordType: xwordType
-        }).limit(1).skip(random);
+            var cursor = collection.find({crosswordType: xwordType}).limit(1).skip(random);
+
             cursor.toArray().then(function (documents) {
                 db.close();
                 callback(documents[0]);
