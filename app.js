@@ -1,6 +1,5 @@
 'use strict';
 
-require('env2')('./.config.env');
 var cfenv = require('cfenv');
 var appEnv = cfenv.getAppEnv();
 var routes = require('./routes/index');

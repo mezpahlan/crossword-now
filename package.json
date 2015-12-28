@@ -23,7 +23,6 @@
     "body-parser": "^1.13.3",
     "cfenv": "^1.0.x",
     "cheerio": "^0.19.0",
-    "env2": "^2.0.2",
     "express": "^4.13.3",
     "pouchdb": "^5.1.0",
     "request-promise": "^1.0.2"
