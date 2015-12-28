@@ -1,30 +1,32 @@
 {
-    "name": "crossword-now",
-    "version": "0.2.0",
-    "description": "Crossword fetching Slack Bot.",
-    "main": "app.js",
-    "scripts": {
-        "start": "node app.js",
-        "test": "FIX ME WHEN YOU DECIDE TO UNIT TEST"
-    },
-    "repository": {
-        "type": "git",
-        "url": "FIX ME WHEN YOU DECIDE TO SAVE TO GIT"
-    },
-    "keywords": [
+  "name": "crossword-now",
+  "version": "0.3.0",
+  "description": "Crossword fetching Slack Bot.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "FIX ME WHEN YOU DECIDE TO UNIT TEST"
+  },
+  "repository": {
+    "type": "git",
+    "url": "FIX ME WHEN YOU DECIDE TO SAVE TO GIT"
+  },
+  "keywords": [
     "slack",
     "bot",
     "nodejs"
   ],
-    "author": "Mez Pahlan",
-    "license": "MIT",
-    "dependencies": {
-        "body-parser": "^1.13.3",
-        "cfenv": "^1.0.x",
-        "cheerio": "^0.19.0",
-        "env2": "^2.0.2",
-        "express": "^4.13.3",
-        "mongodb": "^2.0.45",
-        "request": "^2.61.0"
-    }
+  "author": "Mez Pahlan",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.0.6",
+    "body-parser": "^1.13.3",
+    "cfenv": "^1.0.x",
+    "cheerio": "^0.19.0",
+    "env2": "^2.0.2",
+    "express": "^4.13.3",
+    "mongodb": "^2.0.45",
+    "pouchdb": "^5.1.0",
+    "request-promise": "^1.0.2"
+  }
 }

@@ -1,4 +1,5 @@
 'use strict';
+
 var express = require('express');
 var crossword = require('../controller/crossword');
 var bodyParser = require('body-parser');
@@ -11,20 +12,28 @@ router.use(bodyParser.urlencoded({
 // Routing
 router.post('/', function (req, res) {
     var text = req.body.text;
-    var channel = req.body.channel_name;
 
     switch (text) {
+        case 'admin/info':
+            crossword.info()
+                     .then(response => res.send(response));
+            break;
+        case 'admin/add':
+            crossword.add()
+                     .then(response => res.send(response));
+            break;
         case 'cryptic':
-            res.end();
-            return crossword('cryptic', channel);
+            crossword.now('quick')
+                     .then(response => res.send(response));
+            break;
         case 'quick':
         case '':
-            res.end();
-            return crossword('quick', channel);
+            crossword.now('quick')
+                     .then(response => res.send(response));
+            break;
         default:
-            return res.json({
-                text: 'Valid options are `quick` for a quick crossword, `cryptic` for a cryptic crossword or leave blank for a quick crossword.'
-            });
+            crossword.invalidOption()
+                     .then(response => res.send(response));
     }
 });
 

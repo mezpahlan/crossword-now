@@ -1,4 +1,7 @@
 'use strict';
+
+var Promise = require('bluebird');
+
 // Return a random number from 0 to n-1
 exports.random = function (n) {
     return Math.floor(Math.random() * n);
@@ -9,25 +12,58 @@ exports.randomFromArray = function (p) {
     return Math.floor(Math.random() * (p.length - 1));
 };
 
-// Return a hash of a string crossword id
-exports.hash = function (p) {
+// Return a hash of a string clue id
+exports.hashClueId = function (p) {
     var num, direction;
     num = /\d+/.exec(p)[0];
     direction = /[^-0-9]/.exec(p)[0].toUpperCase();
 
-    return num.concat(direction);
+    let checksum = num.length;
+
+    return num.concat(direction).concat(checksum);
+};
+
+// Return a hash of a crossword Id
+exports.hashCrosswordId = function (p) {
+    let num = /\d+/.exec(p)[0];
+    let type = /\w+/.exec(p)[0].charAt(0).toUpperCase();
+
+    return type.concat(num);
 };
 
 // Returns a crossword id from a hash
 exports.unHash = function (p) {
-    var num, hash, direction;
-    num = /\d+/.exec(p)[0];
-    hash = /\D/.exec(p)[0];
-    if (hash === 'A') {
-        direction = 'across';
-    } else if (hash === 'D') {
-        direction = 'down';
+    let length = p.length;
+    let checksum = p.charAt(length - 1);
+    let direction = p.charAt(length - 2);
+    let clueNum = p.substring(length - 2 - checksum, length - 2);
+    let crosswordNum = p.substring(1, length - 2 - checksum);
+    let type = p.charAt(0);
+
+    if (type === 'Q') {
+        type = 'quick/';
+    } else if (type === 'C') {
+        type = 'cryptic/';
     }
 
-    return num.concat('-').concat(direction);
+    if (direction === 'A') {
+        direction = '-across';
+    } else if (direction === 'D') {
+        direction = '-down';
+    }
+
+    return { crossword: type.concat(crosswordNum), clue: clueNum.concat(direction) };
+};
+
+exports.nextId = function (p) {
+    return new Promise(function (resolve, reject) {
+        let captureGroups = /(.+)\/(.+)/.exec(p);
+
+        // TODO: Destructuring when node supports it [,x,y]
+        let type = captureGroups[1];
+        let num = captureGroups[2];
+
+        let newId = type + '/' + (parseInt(num) + 1);
+        resolve(newId);
+    });
 };

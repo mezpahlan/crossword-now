@@ -1,85 +1,103 @@
 'use strict';
-var data = require('../model/data');
-var request = require('request');
+
+var Promise = require('bluebird');
+var database = require('../model/database');
+var Field = require('../model/slack/field');
+var Attachment = require('../model/slack/attachment');
+var Attachments = require('../model/slack/attachments');
+var Response = require('../model/slack/response');
+let website = require('../api/guardian');
 var helpers = require('./helpers');
-var replyTo;
 
-var getData = function (xwordType, callback) {
-    data.getCrossword(xwordType, function (crossword) {
-        data.getEntry(crossword, function (entry, crosswordNumber) {
-            callback(entry, crosswordNumber.toString());
-        });
+var _typeDetails = function (filteredResponse) {
+    let count = filteredResponse.rows.length;
+    return { count: count, latestId: filteredResponse.rows[count - 1].id };
+};
+
+var invalidOption = function () {
+    return new Promise(function(resolve, reject) {
+        let response = new Response('ephemeral', 'Valid options are `quick` for a quick crossword, ' +
+                                '`cryptic` for a cryptic crossword or leave blank for a quick crossword.');
+        resolve(response);
     });
 };
 
-var payload = function (randomEntry, crosswordNumber, xwordType) {
-    var entryId, xwordClue, xwordId;
-    entryId = helpers.hash(randomEntry.id);
-    xwordClue = randomEntry.clue;
-    xwordId = crosswordNumber.concat(entryId);
+var now = function (type) {
+    let clue = database.getClue(type)
+                       .then(clue => {
+                           let id = helpers.hashCrosswordId(clue.parentId).concat(helpers.hashClueId(clue.id));
+                           let clueType = new Field('Type', type, true);
+                           let clueId = new Field('Id', id, true);
+                           let clueInfo = new Attachment('Clue Info', [clueType, clueId]);
 
-    // TODO: Return response to the channel that the command was invoked from. Could just be a case of removing the override.
-    return JSON.stringify({
-        channel: '#'.concat(replyTo),
-        attachments: [
-            {
-                fallback: xwordClue,
-                text: xwordClue,
-                fields: [
-                    {
-                        title: 'type',
-                        value: xwordType,
-                        short: false
-                    },
-                    {
-                        title: 'id',
-                        value: xwordId,
-                        short: false
-                    }
-                ],
-                color: '#000'
-            }
-        ]
-    });
+                           let attachments = new Attachments([clueInfo]);
+
+                           return new Response('in_channel', clue.clue, attachments);
+                       });
+    return clue;
 };
 
-var webhookResponse = function (randomEntry, crosswordNumber, xwordType) {
-    request({
-        url: process.env.WEBHOOK_IN_URL,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: payload(randomEntry, crosswordNumber, xwordType)
-    }, function (error, response, body) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log(response.statusCode, body);
-        }
-    });
+var info = function () {
+    let info = database.dbInfo()
+                       .then(values => {
+                         let count = values[0].doc_count;
+                         let dbCount = new Field('Count', count, true);
+                         let dbInfo = new Attachment('DB Info', [dbCount]);
+
+                         let quickDetails = _typeDetails(values[1]);
+                         let quickCount = new Field('Count', quickDetails.count, true);
+                         let quickLatestId = new Field('Latest Id', quickDetails.latestId, true);
+                         let quickInfo = new Attachment('Quick Info', [quickCount, quickLatestId]);
+
+                         let crypticDetails = _typeDetails(values[2]);
+                         let crypticCount = new Field('Count', crypticDetails.count, true);
+                         let crypticLatestId = new Field('Latest Id', crypticDetails.latestId, true);
+                         let crypticInfo = new Attachment('Cryptic Info', [crypticCount, crypticLatestId]);
+
+                         let attachments = new Attachments([dbInfo, quickInfo, crypticInfo]);
+
+                         return new Response('ephemeral', 'DB Admin Info', attachments);
+                     })
+                     .catch(err => console.log(err));
+    return info;
 };
 
-var cryptic = function () {
-    getData('cryptic', function (entry, crosswordNumber) {
-        webhookResponse(entry, crosswordNumber, 'cryptic');
-    });
+var add = function (additional) {
+    additional = additional || 1;
+
+    let addQuick = database.filterByType('quick')
+                           .then(response => {
+                                                let rows = response.rows;
+                                                let lastId = rows[rows.length - 1].id;
+
+                                                return helpers.nextId(lastId);
+                                             })
+                           .then(newId => website.scrape(newId))
+                           .then(doc => database.insert(doc, doc.id));
+
+    let addCryptic = database.filterByType('cryptic')
+                           .then(response => {
+                                                let rows = response.rows;
+                                                let lastId = rows[rows.length - 1].id;
+
+                                                return helpers.nextId(lastId);
+                                             })
+                           .then(newId => website.scrape(newId))
+                           .then(doc => database.insert(doc, doc.id));
+
+    return Promise.all([addQuick, addCryptic])
+                  .then(values => {
+                                    let quickAdd1 = new Field('Quick', values[0].id, true);
+                                    let quickAdds = new Attachment('Cryptic Adds', [quickAdd1]);
+
+                                    let crypticAdd1 = new Field('Id', values[1].id, true);
+                                    let crypticAdds = new Attachment('Cryptic Adds', [crypticAdd1]);
+
+                                    let attachments = new Attachments([quickAdds, crypticAdds]);
+
+                                    return new Response('ephemeral', 'Successfully added', attachments);
+                                  })
+                  .catch(err => console.log(err));
 };
 
-var quick = function () {
-    getData('quick', function (entry, crosswordNumber) {
-        webhookResponse(entry, crosswordNumber, 'quick');
-    });
-};
-
-var crossword = function (type, channel) {
-    replyTo = channel;
-
-    if (type === 'quick') {
-        return quick();
-    } else if (type === 'cryptic') {
-        return cryptic();
-    }
-};
-
-module.exports = crossword;
+module.exports = {invalidOption, now, info, add};
