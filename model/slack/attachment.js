@@ -5,7 +5,7 @@ class Attachment {
         let fallback = title + (!fields || fields.length === 0 ? '' : ' - ' + fields.reduce(this._constructFallback, ''));
 
         this.title = title;
-        this.colour = '#000';
+        this.color = '#000';
         this.fields = fields;
         this.fallback =  fallback;
     }
