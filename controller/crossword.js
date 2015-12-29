@@ -4,7 +4,6 @@ var Promise = require('bluebird');
 var database = require('../model/database');
 var Field = require('../model/slack/field');
 var Attachment = require('../model/slack/attachment');
-var Attachments = require('../model/slack/attachments');
 var Response = require('../model/slack/response');
 let website = require('../api/guardian');
 var helpers = require('./helpers');
@@ -32,7 +31,7 @@ var now = function (type) {
                            let clueId = new Field('Id', id, true);
                            let clueInfo = new Attachment('Clue Info', [clueType, clueId]);
 
-                           let attachments = new Attachments([clueInfo]);
+                           let attachments = [clueInfo];
 
                            return new Response('in_channel', clue.clue, attachments);
                        });
@@ -56,7 +55,7 @@ var info = function () {
                          let crypticLatestId = new Field('Latest Id', crypticDetails.latestId, true);
                          let crypticInfo = new Attachment('Cryptic Info', [crypticCount, crypticLatestId]);
 
-                         let attachments = new Attachments([dbInfo, quickInfo, crypticInfo]);
+                         let attachments = [dbInfo, quickInfo, crypticInfo];
 
                          return new Response('ephemeral', 'DB Admin Info', attachments);
                      })
@@ -101,7 +100,7 @@ var add = function (additional) {
                                     let crypticAdd1 = new Field('Id', values[1].id, true);
                                     let crypticAdds = new Attachment('Cryptic Adds', [crypticAdd1]);
 
-                                    let attachments = new Attachments([quickAdds, crypticAdds]);
+                                    let attachments = [quickAdds, crypticAdds];
 
                                     return new Response('ephemeral', 'Successfully added', attachments);
                                   })
