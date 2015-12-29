@@ -11,7 +11,9 @@ var helpers = require('./helpers');
 
 var _typeDetails = function (filteredResponse) {
     let count = filteredResponse.rows.length;
-    return { count: count, latestId: filteredResponse.rows[count - 1].id };
+    let latest = filteredResponse.rows[count - 1] || { id: 'N/A' };
+
+    return { count: count, latestId: latest.id};
 };
 
 var invalidOption = function () {
@@ -67,8 +69,11 @@ var add = function (additional) {
 
     let addQuick = database.filterByType('quick')
                            .then(response => {
-                                                let rows = response.rows;
-                                                let lastId = rows[rows.length - 1].id;
+                                                let details = _typeDetails(response);
+                                                let lastId = details.latestId;
+
+                                                // Start from 24 June 1999 if empty DB
+                                                lastId = lastId === 'N/A' ? 'quick/9093': lastId;
 
                                                 return helpers.nextId(lastId);
                                              })
@@ -77,8 +82,11 @@ var add = function (additional) {
 
     let addCryptic = database.filterByType('cryptic')
                            .then(response => {
-                                                let rows = response.rows;
-                                                let lastId = rows[rows.length - 1].id;
+                                                let details = _typeDetails(response);
+                                                let lastId = details.latestId;
+
+                                                // Start from 24 June 1999 if empty DB
+                                                lastId = lastId === 'N/A' ? 'cryptic/21620' : lastId;
 
                                                 return helpers.nextId(lastId);
                                              })
