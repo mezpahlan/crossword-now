@@ -19,16 +19,16 @@
   "author": "Mez Pahlan",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.0.6",
-    "body-parser": "^1.13.3",
-    "cfenv": "^1.0.x",
+    "bluebird": "^3.1.1",
+    "body-parser": "^1.14.2",
+    "cfenv": "^1.0.3",
     "cheerio": "^0.19.0",
     "express": "^4.13.3",
     "pouchdb": "^5.1.0",
     "request-promise": "^1.0.2"
   },
   "engines": {
-      "node": "4.0.x",
-      "npm": "2.14.x"
+    "node": "^4.2.x",
+    "npm": "^2.14.x"
   }
 }
