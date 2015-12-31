@@ -22,6 +22,9 @@ router.post('/', function (req, res) {
             crossword.add()
                      .then(response => res.send(response));
             break;
+        case 'answer/':
+            console.log('answer branch');
+            break;
         case 'cryptic':
             crossword.now('quick')
                      .then(response => res.send(response));
