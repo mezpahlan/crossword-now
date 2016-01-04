@@ -1,9 +1,12 @@
 'use strict';
 
 var PouchDB = require('pouchdb');
-var localDb = new PouchDB('crosswords');
 var Promise = require('bluebird');
 var Helper = require('../controller/helpers.js');
+var appEnv = Helper.getAppEnv();
+var couchUri = appEnv.getServiceURL('crossword-cloudant').concat('crosswords');
+var localDb = new PouchDB('crosswords');
+var remoteDb = new PouchDB(couchUri);
 
 //
 // Private functions
@@ -53,4 +56,24 @@ var insert = function (doc, id) {
   return localDb.put(doc, id);
 };
 
-module.exports = {getClue, dbInfo, filterByType, insert};
+var init = function () {
+    return new Promise(function (resolve, reject) {
+        localDb.replicate.from(remoteDb)
+                .then(result => {
+                                    localDb.changes({ since: 'now', live: true, include_docs: true })
+                                           .on('change', change => replicate());
+                                    resolve(result);
+                                })
+                .catch(error => reject(error));
+    });
+};
+
+var replicate = function () {
+    return new Promise(function (resolve, reject) {
+        localDb.replicate.to(remoteDb)
+                .then(result => resolve(result))
+                .catch(error => reject(error));
+    });
+};
+
+module.exports = {getClue, dbInfo, filterByType, insert, init, replicate};

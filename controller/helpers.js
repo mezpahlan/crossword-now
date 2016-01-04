@@ -67,3 +67,21 @@ exports.nextId = function (p) {
         resolve(newId);
     });
 };
+
+exports.getAppEnv = function () {
+    let cfenv = require('cfenv');
+    let appEnv;
+    let vcap;
+
+    try { vcap = require('../.vcap.json'); } catch (e) { }
+
+    if (vcap === null) {
+       // Running on CF
+       appEnv = cfenv.getAppEnv();
+    } else {
+        // Running locally
+        appEnv = cfenv.getAppEnv({vcap: vcap});
+    }
+
+    return appEnv;
+};
