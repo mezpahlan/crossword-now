@@ -18,7 +18,8 @@ var _typeDetails = function (filteredResponse) {
 var invalidOption = function () {
     return new Promise(function(resolve, reject) {
         let response = new Response('ephemeral', 'Valid options are `quick` for a quick crossword, ' +
-                                '`cryptic` for a cryptic crossword or leave blank for a quick crossword.');
+                                '`cryptic` for a cryptic crossword or leave blank for a quick crossword. ' +
+                                'For an answer type `answer/<clue id>`.');
         resolve(response);
     });
 };
@@ -107,4 +108,13 @@ var add = function (additional) {
                   .catch(err => console.log(err));
 };
 
-module.exports = {invalidOption, now, info, add};
+var answer = function (text) {
+    let clueId = /\/(.+)/.exec(text)[1];
+    return new Promise(function(resolve, reject) {
+        let response = new Response('ephemeral', clueId);
+
+        resolve(response);
+    });
+};
+
+module.exports = {invalidOption, now, info, add, answer};

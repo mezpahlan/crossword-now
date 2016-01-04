@@ -22,8 +22,10 @@ router.post('/', function (req, res) {
             crossword.add()
                      .then(response => res.send(response));
             break;
-        case 'answer/':
-            console.log('answer branch');
+        case (text.match(/^answer\/./) || {}).input:
+            // Help me Hacky-Wan Kenobi.. you're my only hope!
+            crossword.answer(text)
+                     .then(response => res.send(response));
             break;
         case 'cryptic':
             crossword.now('quick')
