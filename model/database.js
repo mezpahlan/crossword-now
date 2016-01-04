@@ -1,7 +1,7 @@
 'use strict';
 
 var PouchDB = require('pouchdb');
-var db = new PouchDB('crosswords');
+var localDb = new PouchDB('crosswords');
 var Promise = require('bluebird');
 var Helper = require('../controller/helpers.js');
 
@@ -14,7 +14,7 @@ var _randomCrosswordId = function (col) {
 };
 
 var _getCrossword = function (crosswordId) {
-    return db.get(crosswordId);
+    return localDb.get(crosswordId);
 };
 
 var _randomClue = function (doc) {
@@ -26,11 +26,11 @@ var _randomClue = function (doc) {
 // Public functions
 //
 var filterByType = function (type) {
-    return db.allDocs({startkey: type, endkey: type.concat('\uffff')});
+    return localDb.allDocs({startkey: type, endkey: type.concat('\uffff')});
 };
 
 var dbInfo = function () {
-    return Promise.all([db.info(), filterByType('quick'), filterByType('cryptic')]);
+    return Promise.all([localDb.info(), filterByType('quick'), filterByType('cryptic')]);
 };
 
 var getClue = function (type) {
@@ -50,7 +50,7 @@ var getClue = function (type) {
 };
 
 var insert = function (doc, id) {
-  return db.put(doc, id);
+  return localDb.put(doc, id);
 };
 
 module.exports = {getClue, dbInfo, filterByType, insert};
