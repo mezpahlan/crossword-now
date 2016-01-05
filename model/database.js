@@ -25,6 +25,11 @@ var _randomClue = function (doc) {
     return doc.entries[randomIndex];
 };
 
+var _clue = function (doc, id) {
+    let index = doc.entries.map(x => x.id).indexOf(id);
+    return doc.entries[index];
+};
+
 //
 // Public functions
 //
@@ -52,6 +57,12 @@ var getClue = function (type) {
                 .catch(err => console.log(err));
 };
 
+var getAnswer = function (crossword, id) {
+    return _getCrossword(crossword)
+                .then(doc => _clue(doc, id))
+                .catch(error => console.log(error));
+};
+
 var insert = function (doc, id) {
   return localDb.put(doc, id);
 };
@@ -76,4 +87,4 @@ var replicate = function () {
     });
 };
 
-module.exports = {getClue, dbInfo, filterByType, insert, init, replicate};
+module.exports = {getClue, getAnswer, dbInfo, filterByType, insert, init, replicate};

@@ -41,9 +41,9 @@ exports.unHash = function (p) {
     let type = p.charAt(0);
 
     if (type === 'Q') {
-        type = 'quick/';
+        type = 'quick';
     } else if (type === 'C') {
-        type = 'cryptic/';
+        type = 'cryptic';
     }
 
     if (direction === 'A') {
@@ -52,7 +52,7 @@ exports.unHash = function (p) {
         direction = '-down';
     }
 
-    return { crossword: type.concat(crosswordNum), clue: clueNum.concat(direction) };
+    return { crossword: type.concat('/').concat(crosswordNum), clue: clueNum.concat(direction), type: type };
 };
 
 exports.nextId = function (p) {

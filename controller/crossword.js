@@ -110,11 +110,21 @@ var add = function (additional) {
 
 var answer = function (text) {
     let clueId = /\/(.+)/.exec(text)[1];
-    return new Promise(function(resolve, reject) {
-        let response = new Response('ephemeral', clueId);
+    let clueInfo = helpers.unHash(clueId);
 
-        resolve(response);
-    });
+    // Call the DB for the answer
+    let answer = database.getAnswer(clueInfo.crossword, clueInfo.clue)
+                         .then(answer => {
+                                let clue = new Field('Clue', answer.clue);
+                                let answerType = new Field('Type', clueInfo.type, true);
+                                let answerId = new Field('Id', clueId, true);
+                                let answerInfo = new Attachment('Answer Info', [clue, answerType, answerId]);
+
+                                let attachments = [answerInfo];
+
+                                return new Response('ephemeral', answer.solution, attachments);
+                             });
+    return answer;
 };
 
 module.exports = {invalidOption, now, info, add, answer};
