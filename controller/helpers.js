@@ -41,9 +41,9 @@ exports.unHash = function (p) {
     let type = p.charAt(0);
 
     if (type === 'Q') {
-        type = 'quick/';
+        type = 'quick';
     } else if (type === 'C') {
-        type = 'cryptic/';
+        type = 'cryptic';
     }
 
     if (direction === 'A') {
@@ -52,7 +52,7 @@ exports.unHash = function (p) {
         direction = '-down';
     }
 
-    return { crossword: type.concat(crosswordNum), clue: clueNum.concat(direction) };
+    return { crossword: type.concat('/').concat(crosswordNum), clue: clueNum.concat(direction), type: type };
 };
 
 exports.nextId = function (p) {
@@ -66,4 +66,22 @@ exports.nextId = function (p) {
         let newId = type + '/' + (parseInt(num) + 1);
         resolve(newId);
     });
+};
+
+exports.getAppEnv = function () {
+    let cfenv = require('cfenv');
+    let appEnv;
+    let vcap;
+
+    try { vcap = require('../.vcap.json'); } catch (e) { }
+
+    if (vcap === null) {
+       // Running on CF
+       appEnv = cfenv.getAppEnv();
+    } else {
+        // Running locally
+        appEnv = cfenv.getAppEnv({vcap: vcap});
+    }
+
+    return appEnv;
 };

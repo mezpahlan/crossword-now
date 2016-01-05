@@ -1,16 +1,28 @@
 'use strict';
 
-var cfenv = require('cfenv');
-var appEnv = cfenv.getAppEnv();
-var routes = require('./routes/index');
+var Promise = require('bluebird');
 var express = require('express');
+var Helper = require('./controller/helpers');
+var database = require('./model/database');
+var routes = require('./routes/index');
 var app = express();
+var appEnv = Helper.getAppEnv();
 
 app.use('/', routes);
 
-var server = app.listen(appEnv.port, function () {
-    var host = server.address().address;
-    var port = server.address().port;
+var startServer = function () {
+    return new Promise(function(resolve, reject) {
+        let server = app.listen(appEnv.port, appEnv.bind, function() {
+                                    console.log('Server starting on ' + appEnv.url);
 
-    console.log('Crossword app listening at http://%s:%s', host, port);
-});
+                                });
+        resolve(server);
+    });
+};
+
+// First replicate from remote
+// Then set up server
+database.init()
+        .then(result => console.log(result))
+        .then(() => startServer())
+        .catch(error => console.log(error));

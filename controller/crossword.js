@@ -18,7 +18,8 @@ var _typeDetails = function (filteredResponse) {
 var invalidOption = function () {
     return new Promise(function(resolve, reject) {
         let response = new Response('ephemeral', 'Valid options are `quick` for a quick crossword, ' +
-                                '`cryptic` for a cryptic crossword or leave blank for a quick crossword.');
+                                '`cryptic` for a cryptic crossword or leave blank for a quick crossword. ' +
+                                'For an answer type `answer/<clue id>`.');
         resolve(response);
     });
 };
@@ -107,4 +108,23 @@ var add = function (additional) {
                   .catch(err => console.log(err));
 };
 
-module.exports = {invalidOption, now, info, add};
+var answer = function (text) {
+    let clueId = /\/(.+)/.exec(text)[1];
+    let clueInfo = helpers.unHash(clueId);
+
+    // Call the DB for the answer
+    let answer = database.getAnswer(clueInfo.crossword, clueInfo.clue)
+                         .then(answer => {
+                                let clue = new Field('Clue', answer.clue);
+                                let answerType = new Field('Type', clueInfo.type, true);
+                                let answerId = new Field('Id', clueId, true);
+                                let answerInfo = new Attachment('Answer Info', [clue, answerType, answerId]);
+
+                                let attachments = [answerInfo];
+
+                                return new Response('ephemeral', answer.solution, attachments);
+                             });
+    return answer;
+};
+
+module.exports = {invalidOption, now, info, add, answer};

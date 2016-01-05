@@ -27,7 +27,7 @@ build/Release
 node_modules
 
 # Config files
-.config.env
+.vcap.json
 
 # PouchDB
 crosswords

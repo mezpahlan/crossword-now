@@ -1,9 +1,12 @@
 'use strict';
 
 var PouchDB = require('pouchdb');
-var db = new PouchDB('crosswords');
 var Promise = require('bluebird');
 var Helper = require('../controller/helpers.js');
+var appEnv = Helper.getAppEnv();
+var couchUri = appEnv.getServiceURL('crossword-cloudant').concat('crosswords');
+var localDb = new PouchDB('crosswords');
+var remoteDb = new PouchDB(couchUri);
 
 //
 // Private functions
@@ -14,7 +17,7 @@ var _randomCrosswordId = function (col) {
 };
 
 var _getCrossword = function (crosswordId) {
-    return db.get(crosswordId);
+    return localDb.get(crosswordId);
 };
 
 var _randomClue = function (doc) {
@@ -22,15 +25,20 @@ var _randomClue = function (doc) {
     return doc.entries[randomIndex];
 };
 
+var _clue = function (doc, id) {
+    let index = doc.entries.map(x => x.id).indexOf(id);
+    return doc.entries[index];
+};
+
 //
 // Public functions
 //
 var filterByType = function (type) {
-    return db.allDocs({startkey: type, endkey: type.concat('\uffff')});
+    return localDb.allDocs({startkey: type, endkey: type.concat('\uffff')});
 };
 
 var dbInfo = function () {
-    return Promise.all([db.info(), filterByType('quick'), filterByType('cryptic')]);
+    return Promise.all([localDb.info(), filterByType('quick'), filterByType('cryptic')]);
 };
 
 var getClue = function (type) {
@@ -49,8 +57,34 @@ var getClue = function (type) {
                 .catch(err => console.log(err));
 };
 
-var insert = function (doc, id) {
-  return db.put(doc, id);
+var getAnswer = function (crossword, id) {
+    return _getCrossword(crossword)
+                .then(doc => _clue(doc, id))
+                .catch(error => console.log(error));
 };
 
-module.exports = {getClue, dbInfo, filterByType, insert};
+var insert = function (doc, id) {
+  return localDb.put(doc, id);
+};
+
+var init = function () {
+    return new Promise(function (resolve, reject) {
+        localDb.replicate.from(remoteDb)
+                .then(result => {
+                                    localDb.changes({ since: 'now', live: true, include_docs: true })
+                                           .on('change', change => replicate());
+                                    resolve(result);
+                                })
+                .catch(error => reject(error));
+    });
+};
+
+var replicate = function () {
+    return new Promise(function (resolve, reject) {
+        localDb.replicate.to(remoteDb)
+                .then(result => resolve(result))
+                .catch(error => reject(error));
+    });
+};
+
+module.exports = {getClue, getAnswer, dbInfo, filterByType, insert, init, replicate};
