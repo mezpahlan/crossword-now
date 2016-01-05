@@ -28,7 +28,7 @@ router.post('/', function (req, res) {
                      .then(response => res.send(response));
             break;
         case 'cryptic':
-            crossword.now('quick')
+            crossword.now('cryptic')
                      .then(response => res.send(response));
             break;
         case 'quick':
