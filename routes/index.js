@@ -11,7 +11,7 @@ router.use(bodyParser.urlencoded({
 
 // Routing
 router.post('/', function (req, res) {
-    var text = req.body.text;
+    var text = req.body.text || 'invalidOption';
 
     switch (text) {
         case 'admin/info':
