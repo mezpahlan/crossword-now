@@ -24,12 +24,14 @@
     "cfenv": "^1.0.3",
     "cheerio": "^0.19.0",
     "express": "^4.13.3",
-    "jasmine": "^2.4.1",
     "pouchdb": "^5.1.0",
     "request-promise": "^1.0.2"
   },
   "engines": {
     "node": "^4.2.x",
     "npm": "^2.14.x"
+  },
+  "devDependencies": {
+    "jasmine": "^2.4.1"
   }
 }
