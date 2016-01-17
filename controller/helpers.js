@@ -41,12 +41,12 @@ exports.unHash = function (p) {
     }
 
     if (direction === 'A') {
-        direction = '-across';
+        direction = 'across';
     } else if (direction === 'D') {
-        direction = '-down';
+        direction = 'down';
     }
 
-    return { crossword: type.concat('/').concat(crosswordNum), clue: clueNum.concat(direction), type: type };
+    return { crossword: type.concat('/').concat(crosswordNum), clue: clueNum.concat('-').concat(direction), type: type };
 };
 
 exports.nextId = function (p) {
