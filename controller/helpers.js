@@ -9,9 +9,8 @@ exports.randomInteger = function (n) {
 
 // Return a hash of a string clue id
 exports.hashClueId = function (p) {
-    var num, direction;
-    num = /\d+/.exec(p)[0];
-    direction = /[^-0-9]/.exec(p)[0].toUpperCase();
+    let num = /\d+/.exec(p)[0];
+    let direction = /[^-0-9]/.exec(p)[0].toUpperCase();
 
     let checksum = num.length;
 
