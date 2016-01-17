@@ -3,7 +3,7 @@
 var Promise = require('bluebird');
 
 // Return a random number from 0 to n-1
-exports.random = function (n) {
+exports.randomInteger = function (n) {
     return Math.floor(Math.random() * n);
 };
 

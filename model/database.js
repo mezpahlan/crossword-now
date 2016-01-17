@@ -12,7 +12,7 @@ var remoteDb = new PouchDB(couchUri);
 // Private functions
 //
 var _randomCrosswordId = function (col) {
-    let randomIndex = Helper.random(col.length);
+    let randomIndex = Helper.randomInteger(col.length);
     return col[randomIndex].id;
 };
 
@@ -21,7 +21,7 @@ var _getCrossword = function (crosswordId) {
 };
 
 var _randomClue = function (doc) {
-    var randomIndex = Helper.random(doc.entries.length);
+    var randomIndex = Helper.randomInteger(doc.entries.length);
     return doc.entries[randomIndex];
 };
 
