@@ -33,6 +33,7 @@
     "npm": "^2.14.x"
   },
   "devDependencies": {
+    "ink-docstrap": "^1.1.1",
     "jasmine": "^2.4.1",
     "jasmine-sinon": "^0.4.0",
     "jsdoc": "^3.4.0",
