@@ -3,6 +3,7 @@
         "allowUnknownTags": true,
         "dictionaries": ["jsdoc","closure"]
     },
+    "plugins": ["plugins/markdown"],
     "source": {
         "include": [ "./" ],
         "exclude": [ "docs", "node_modules" ],
@@ -10,10 +11,29 @@
         "excludePattern": "(^|\\/|\\\\)_|.+[Ss]pec\\.js"
     },
     "templates": {
+        "logoFile": "",
         "cleverLinks": false,
-        "monospaceLinks": false
-    },
+        "monospaceLinks": false,
+        "dateFormat": "ddd Do MMM YYYY",
+        "outputSourceFiles": true,
+        "outputSourcePath": true,
+        "systemName": "Crossword-Now!",
+        "footer": "",
+        "copyright": "Crossword-Now! Copyright © 2015-2016 Mez Pahlan",
+        "navType": "vertical",
+        "theme": "paper",
+        "linenums": true,
+        "collapseSymbols": false,
+        "inverseNav": true,
+        "protocol": "html://",
+        "methodHeadingReturns": false
+      },
+    "markdown": {
+        "parser": "gfm",
+        "hardwrap": true
+      },
     "opts": {
+      "template": "./node_modules/ink-docstrap/template",
       "destination": "./docs/",
       "readme": "./README.md",
       "recurse": true,
