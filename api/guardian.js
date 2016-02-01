@@ -8,8 +8,6 @@ var Helper = require('../controller/helpers');
  * Methods for accessing crosswords provided by The Guardian.
  */
 class Guardian {
-    constructor () {}
-
     /**
      * Scrapes the website for crossword data.
      *
