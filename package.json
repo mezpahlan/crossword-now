@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "test": "jasmine",
-    "document": "documentation --format \"html\" --output \"docs\""
+    "jsdoc": "jsdoc --configure .jsdocrc"
   },
   "repository": {
     "type": "git",
@@ -33,9 +33,9 @@
     "npm": "^2.14.x"
   },
   "devDependencies": {
-    "documentation": "^3.0.4",
     "jasmine": "^2.4.1",
     "jasmine-sinon": "^0.4.0",
+    "jsdoc": "^3.4.0",
     "sinon": "^1.17.2"
   }
 }
