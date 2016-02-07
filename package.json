@@ -37,6 +37,7 @@
     "jasmine": "^2.4.1",
     "jasmine-sinon": "^0.4.0",
     "jsdoc": "^3.4.0",
+    "mockery": "^1.4.0",
     "sinon": "^1.17.2"
   }
 }
