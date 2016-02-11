@@ -1,6 +1,7 @@
 'use strict';
+
 var sinon = require('sinon');
-var Helpers = require('../../controller/helpers');
+var Helpers = require('../../../controller/helpers');
 
 describe('Helpers', () => {
 
