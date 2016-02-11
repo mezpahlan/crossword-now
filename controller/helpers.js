@@ -1,6 +1,6 @@
 'use strict';
 
-var Promise = require('bluebird');
+var Bluebird = require('bluebird');
 
 /**
  * Utility methods for assorted tasks.
@@ -81,7 +81,7 @@ class Helpers {
      * @returns {Promise} - A promise that will resolve to new crossword id.
      */
     static nextId (p) {
-        return new Promise(function (resolve, reject) {
+        return new Bluebird(function (resolve, reject) {
             let captureGroups = /(.+)\/(.+)/.exec(p);
 
             // TODO: Destructuring when node supports it [,x,y]

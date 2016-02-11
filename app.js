@@ -1,6 +1,6 @@
 'use strict';
 
-var Promise = require('bluebird');
+var Bluebird = require('bluebird');
 var express = require('express');
 var Helper = require('./controller/helpers');
 var database = require('./model/database');
@@ -11,7 +11,7 @@ var appEnv = Helper.getAppEnv();
 app.use('/', routes);
 
 var startServer = function () {
-    return new Promise(function(resolve, reject) {
+    return new Bluebird(function(resolve, reject) {
         let server = app.listen(appEnv.port, appEnv.bind, function() {
                                     console.log('Server starting on ' + appEnv.url);
 

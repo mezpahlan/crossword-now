@@ -1,7 +1,7 @@
 'use strict';
 
 var PouchDB = require('pouchdb');
-var Promise = require('bluebird');
+var Bluebird = require('bluebird');
 var Helper = require('../controller/helpers.js');
 var appEnv = Helper.getAppEnv();
 var couchUri = appEnv.getServiceURL('crossword-cloudant').concat('crosswords');
@@ -38,7 +38,7 @@ var filterByType = function (type) {
 };
 
 var dbInfo = function () {
-    return Promise.all([localDb.info(), filterByType('quick'), filterByType('cryptic')]);
+    return Bluebird.all([localDb.info(), filterByType('quick'), filterByType('cryptic')]);
 };
 
 var getClue = function (type) {
@@ -68,7 +68,7 @@ var insert = function (doc, id) {
 };
 
 var init = function () {
-    return new Promise(function (resolve, reject) {
+    return new Bluebird(function (resolve, reject) {
         localDb.replicate.from(remoteDb)
                 .then(result => {
                                     localDb.changes({ since: 'now', live: true, include_docs: true })
@@ -80,7 +80,7 @@ var init = function () {
 };
 
 var replicate = function () {
-    return new Promise(function (resolve, reject) {
+    return new Bluebird(function (resolve, reject) {
         localDb.replicate.to(remoteDb)
                 .then(result => resolve(result))
                 .catch(error => reject(error));

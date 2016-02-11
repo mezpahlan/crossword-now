@@ -1,6 +1,6 @@
 'use strict';
 
-var Promise = require('bluebird');
+var Bluebird = require('bluebird');
 var database = require('../model/database');
 var Field = require('../model/slack/field');
 var Attachment = require('../model/slack/attachment');
@@ -16,7 +16,7 @@ var _typeDetails = function (filteredResponse) {
 };
 
 var invalidOption = function () {
-    return new Promise(function(resolve, reject) {
+    return new Bluebird(function(resolve, reject) {
         let response = new Response('ephemeral', 'Valid options are `quick` for a quick crossword, ' +
                                 '`cryptic` for a cryptic crossword or leave blank for a quick crossword. ' +
                                 'For an answer type `answer/<clue id>`.');
@@ -93,7 +93,7 @@ var add = function (additional) {
                            .then(newId => website.scrape(newId))
                            .then(doc => database.insert(doc, doc.id));
 
-    return Promise.all([addQuick, addCryptic])
+    return Bluebird.all([addQuick, addCryptic])
                   .then(values => {
                                     let quickAdd1 = new Field('Quick', values[0].id, true);
                                     let quickAdds = new Attachment('Cryptic Adds', [quickAdd1]);
@@ -111,6 +111,11 @@ var add = function (additional) {
 var answer = function (text) {
     let clueId = /\/(.+)/.exec(text)[1];
     let clueInfo = helpers.unHash(clueId);
+    // TODO: Error scenarios
+    // TODO: 1) Can't unhash in anyway (crossword, id, type). Handle this in the unhash and send error back
+    // TODO: 2) Can unhash but crossword doesn't exist.
+    // TODO: 3) Can unhash but clue doesn't exist.
+    // TODO: Will we get the same error response back from 2) and 3)?? If so, good.
 
     // Call the DB for the answer
     let answer = database.getAnswer(clueInfo.crossword, clueInfo.clue)
@@ -123,7 +128,8 @@ var answer = function (text) {
                                 let attachments = [answerInfo];
 
                                 return new Response('ephemeral', answer.solution, attachments);
-                             });
+                             })
+                         .catch(error => console.log('ERROR BLOCK\n' + JSON.parse(error)));
     return answer;
 };
 
