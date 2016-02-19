@@ -13,9 +13,9 @@ describe('Guardian', () => {
         });
 
         mockery.registerMock('request-promise', () => {
-                    return require('../../../test/doubles/api/guardian');
-                });
+            return require('../../../test/doubles/api/guardian');
         });
+    });
 
     afterAll(() => {
         mockery.disable();
