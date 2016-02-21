@@ -1,6 +1,7 @@
 'use strict';
 
 var sinon = require('sinon');
+var Bluebird = require('bluebird');
 var Helpers = require('../../../controller/helpers');
 
 describe('Helpers', () => {
@@ -82,17 +83,18 @@ describe('Helpers', () => {
     });
 
     describe('nextId', () => {
-        it('should return the next id given a crossword id', () => {
+        it('should return the next id given a crossword id', (done) => {
             // Given
 
 
             // When
-            let resultPromise1 = Helpers.nextId('cryptic/4321');
-            let resultPromise2 = Helpers.nextId('quick/1234');
+            let promise1 = Helpers.nextId('cryptic/4321');
+            let promise2 = Helpers.nextId('quick/1234');
 
             // Then
-            resultPromise1.then(result1 => expect(result1).toBe('cryptic/4322'));
-            resultPromise2.then(result2 => expect(result2).toBe('quick/1235'));
+            Bluebird.all([promise1, promise2])
+                    .then(results => { expect(results[0]).toBe('cryptic/4322'); expect(results[1]).toBe('quick/1235'); })
+                    .finally(() => done());
         });
     });
 });
