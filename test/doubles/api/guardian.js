@@ -3,15 +3,15 @@
 var fs = require('fs');
 var Bluebird = require('bluebird');
 
-function guardianApiDouble (id) {
+function guardianApiDouble (url) {
     let promise;
 
-    switch (id) {
-        case 'cryptic/2660':
+    switch (url) {
+        case (url.match(/cryptic\/26670/) || {}).input:
             promise = Bluebird.reject('Test fetching \'next\' id.');
 
             break;
-        case 'cryptic/2661':
+        case (url.match(/cryptic\/26671/) || {}).input:
             let response = fs.readFileSync('test/data/cryptic.html', 'utf8');
             promise = Bluebird.resolve(response.trim());
 
