@@ -45,4 +45,23 @@ describe('Crossword', () => {
                 .finally(() => done());
         });
     });
+
+    describe('info', () => {
+       it('should describe the current state of the database', (done) => {
+           // Given
+           const doubledDbInfo = new Attachment('DB Info', [new Field('Count', 2, true)]);
+           const doubledQuickInfo = new Attachment('Quick Info', [new Field('Count', 1, true), new Field('Latest Id', 'latest_quick_id', true)]);
+           const doubledCrypticInfo = new Attachment('Cryptic Info', [new Field('Count', 1, true), new Field('Latest Id', 'latest_cryptic_id', true)]);
+           const attachments = [doubledDbInfo, doubledQuickInfo, doubledCrypticInfo];
+           const expected = new Response('ephemeral', 'DB Admin Info', attachments);
+
+           // When
+           let resultPromise = Crossword.info();
+
+           // Then
+           resultPromise
+                .then(result => expect(result).toEqual(expected))
+                .finally(() => done());
+       });
+    });
 });

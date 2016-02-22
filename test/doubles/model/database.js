@@ -20,4 +20,15 @@ function getClueDouble () {
     return Bluebird.resolve(clue);
 }
 
-module.exports = { getClue: getClueDouble };
+function dbInfoDouble () {
+    const info = [
+                    { doc_count: 2 },
+                    { rows: [ { id: 'latest_quick_id' } ] },
+                    { rows: [ { id: 'latest_cryptic_id' } ] }
+                 ];
+
+    return Bluebird.resolve(info);
+
+}
+
+module.exports = { getClue: getClueDouble, dbInfo: dbInfoDouble };
