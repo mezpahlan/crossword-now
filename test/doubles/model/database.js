@@ -23,12 +23,27 @@ function getClueDouble () {
 function dbInfoDouble () {
     const info = [
                     { doc_count: 2 },
-                    { rows: [ { id: 'latest_quick_id' } ] },
-                    { rows: [ { id: 'latest_cryptic_id' } ] }
+                    { rows: [ { id: 'quick/14139' } ] },
+                    { rows: [ { id: 'cryptic/26671' } ] }
                  ];
 
     return Bluebird.resolve(info);
 
 }
 
-module.exports = { getClue: getClueDouble, dbInfo: dbInfoDouble };
+function filterByTypeDouble (type) {
+    switch (type) {
+        case 'quick':
+            return Bluebird.resolve({ rows: [ { id: 'quick/14139' } ] });
+        case 'cryptic':
+           return Bluebird.resolve({ rows: [ { id: 'cryptic/26671' } ] });
+        default:
+            throw new RangeError('Invalid type. Must be one of quick or cryptic');
+    }
+}
+
+function insertDouble (doc, id) {
+    return Bluebird.resolve({ ok: true, id: id, rev: 'fake_revision' });
+}
+
+module.exports = { getClue: getClueDouble, dbInfo: dbInfoDouble, filterByType: filterByTypeDouble, insert: insertDouble };
