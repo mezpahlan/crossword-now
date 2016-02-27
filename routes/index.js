@@ -23,8 +23,9 @@ router.post('/', function (req, res) {
                      .then(response => res.send(response));
             break;
         case (text.match(/^answer\/./) || {}).input:
-            // Help me Hacky-Wan Kenobi.. you're my only hope!
-            crossword.answer(text)
+            // Help me Hacky-Wan Kenobi... you're my only hope!
+            const clueId = /^answer\/(.+)/.exec(text)[1];
+            crossword.answer(clueId)
                      .then(response => res.send(response));
             break;
         case 'cryptic':

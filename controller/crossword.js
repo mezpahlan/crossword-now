@@ -108,8 +108,7 @@ var add = function (additional) {
                   .catch(err => console.log(err));
 };
 
-var answer = function (text) {
-    let clueId = /\/(.+)/.exec(text)[1];
+var answer = function (clueId) {
     let clueInfo = helpers.unHash(clueId);
     // TODO: Error scenarios
     // TODO: 1) Can't unhash in anyway (crossword, id, type). Handle this in the unhash and send error back
