@@ -92,4 +92,25 @@ describe('Crossword', () => {
             // Then
         });
     });
+
+    describe('answer', () => {
+        it('should return the answer given a clue id', (done) => {
+            // Given
+            const clue = new Field('Clue', 'Sore head from booze, drunk and awake — what now? (5,2)');
+            const answerType = new Field('Type', 'cryptic', true);
+            const answerId = new Field('Id', 'C266711A1', true);
+            const answerInfo = new Attachment('Answer Info', [clue, answerType, answerId]);
+            const attachments = [answerInfo];
+
+            const expected = new Response('ephemeral', 'SOBERUP', attachments);
+
+            // When
+            let resultPromise = Crossword.answer('C266711A1');
+
+            // Then
+            resultPromise
+                .then(result => expect(result).toEqual(expected))
+                .finally(() => done());
+        });
+    });
 });
