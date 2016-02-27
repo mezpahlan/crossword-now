@@ -95,8 +95,8 @@ var add = function (additional) {
 
     return Bluebird.all([addQuick, addCryptic])
                   .then(values => {
-                                    let quickAdd1 = new Field('Quick', values[0].id, true);
-                                    let quickAdds = new Attachment('Cryptic Adds', [quickAdd1]);
+                                    let quickAdd1 = new Field('Id', values[0].id, true);
+                                    let quickAdds = new Attachment('Quick Adds', [quickAdd1]);
 
                                     let crypticAdd1 = new Field('Id', values[1].id, true);
                                     let crypticAdds = new Attachment('Cryptic Adds', [crypticAdd1]);
