@@ -46,4 +46,25 @@ function insertDouble (doc, id) {
     return Bluebird.resolve({ ok: true, id: id, rev: 'fake_revision' });
 }
 
-module.exports = { getClue: getClueDouble, dbInfo: dbInfoDouble, filterByType: filterByTypeDouble, insert: insertDouble };
+function getAnswerDouble (crossword, clueId) {
+    // TODO: Maybe drive this via the already saved JSON file using a requires?
+    return Bluebird.resolve({
+        id: '1-across',
+        number: 1,
+        humanNumber: '1',
+        clue: 'Sore head from booze, drunk and awake — what now? (5,2)',
+        direction: 'across',
+        length: 7,
+        group: ['1-across'],
+        position: {
+            x: 0,
+            y: 0
+        },
+        separatorLocations: {
+            ',': [5]
+        },
+        solution: 'SOBERUP'
+    });
+}
+
+module.exports = { getClue: getClueDouble, dbInfo: dbInfoDouble, filterByType: filterByTypeDouble, insert: insertDouble, getAnswer: getAnswerDouble};
