@@ -8,19 +8,23 @@ function guardianApiDouble (url) {
     let response;
 
     switch (url) {
+        case (url.match(/quick\/14139/) || {}).input:
+            response = fs.readFileSync('test/data/quick.14139.html', 'utf8');
+            promise = Bluebird.resolve(response.trim());
+            break;
         case (url.match(/quick\/14140/) || {}).input:
-            response = fs.readFileSync('test/data/quick.html', 'utf8');
+            response = fs.readFileSync('test/data/quick.14140.html', 'utf8');
             promise = Bluebird.resolve(response.trim());
             break;
         case (url.match(/cryptic\/26670/) || {}).input:
             promise = Bluebird.reject('Test fetching \'next\' id.');
             break;
         case (url.match(/cryptic\/26671/) || {}).input:
-            response = fs.readFileSync('test/data/cryptic.html', 'utf8');
+            response = fs.readFileSync('test/data/cryptic.26671.html', 'utf8');
             promise = Bluebird.resolve(response.trim());
             break;
         case (url.match(/cryptic\/26672/) || {}).input:
-            response = fs.readFileSync('test/data/cryptic.html', 'utf8');
+            response = fs.readFileSync('test/data/cryptic.26672.html', 'utf8');
             promise = Bluebird.resolve(response.trim());
             break;
         default:
