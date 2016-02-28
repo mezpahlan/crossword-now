@@ -17,8 +17,7 @@ describe('Guardian', () => {
 
             // Then
             promise
-                .then(result => expect(result).toEqual(expected))
-                .finally(() => done());
+                .then(result => { expect(result).toEqual(expected); done(); });
         });
 
         it('should try again with the \'next\' valid crossword id', (done) => {
@@ -30,8 +29,7 @@ describe('Guardian', () => {
 
             // Then
             resultPromise
-                .then(result => expect(result).toEqual(expected))
-                .finally(() => done());
+                .then(result => { expect(result).toEqual(expected); done(); });
         });
     });
 });

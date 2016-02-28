@@ -93,8 +93,7 @@ describe('Helpers', () => {
 
             // Then
             Bluebird.all([promise1, promise2])
-                    .then(results => { expect(results[0]).toBe('cryptic/4322'); expect(results[1]).toBe('quick/1235'); })
-                    .finally(() => done());
+                    .then(results => { expect(results[0]).toBe('cryptic/4322'); expect(results[1]).toBe('quick/1235'); done(); });
         });
     });
 });

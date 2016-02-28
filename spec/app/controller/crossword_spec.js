@@ -23,8 +23,7 @@ describe('Crossword', () => {
 
             // Then
             resultPromise
-                .then(result => expect(result).toEqual(expected))
-                .finally(() => done());
+                .then(result => { expect(result).toEqual(expected); done(); });
         });
     });
 
@@ -43,8 +42,7 @@ describe('Crossword', () => {
 
             // Then
             resultPromise
-                .then(result => expect(result).toEqual(expected))
-                .finally(() => done());
+                .then(result => { expect(result).toEqual(expected); done(); });
         });
     });
 
@@ -62,8 +60,7 @@ describe('Crossword', () => {
 
            // Then
            resultPromise
-                .then(result => expect(result).toEqual(expected))
-                .finally(() => done());
+                .then(result => { expect(result).toEqual(expected); done(); });
        });
     });
 
@@ -80,16 +77,22 @@ describe('Crossword', () => {
 
             // Then
             resultPromise
-                .then(result => expect(result).toEqual(expected))
-                .finally(() => done());
+                .then(result => { expect(result).toEqual(expected); done(); });
         });
 
         xit('should add multiple crosswords of each type to the database', (done) => {
             // Given
+            const doubledQuickAdds = new Attachment('Quick Adds', [new Field('Id', 'quick/14141', true)]);
+            const doubledCrypticAdds = new Attachment('Cryptic Adds', [new Field('Id', 'cryptic/26673', true)]);
+            const attachments = [doubledQuickAdds, doubledCrypticAdds];
+            const expected = new Response('ephemeral', 'Successfully added', attachments);
 
             // When
+            let resultPromise = Crossword.add(2);
 
             // Then
+            resultPromise
+                .then(result => { expect(result).toEqual(expected); done(); });
         });
     });
 
@@ -109,8 +112,7 @@ describe('Crossword', () => {
 
             // Then
             resultPromise
-                .then(result => expect(result).toEqual(expected))
-                .finally(() => done());
+                .then(result => { expect(result).toEqual(expected); done(); });
         });
     });
 });
