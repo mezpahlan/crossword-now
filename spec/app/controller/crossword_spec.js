@@ -67,8 +67,8 @@ describe('Crossword', () => {
     describe('add', () => {
         it('should add a single extra crossword of each type to the database', (done) => {
             // Given
-            const doubledQuickAdds = new Attachment('Quick Adds', [new Field('Id', 'quick/14139', true)]);
-            const doubledCrypticAdds = new Attachment('Cryptic Adds', [new Field('Id', 'cryptic/26671', true)]);
+            const doubledQuickAdds = new Attachment('Quick Adds', [new Field('Id', 'quick/14140', true)]);
+            const doubledCrypticAdds = new Attachment('Cryptic Adds', [new Field('Id', 'cryptic/26672', true)]);
             const attachments = [doubledQuickAdds, doubledCrypticAdds];
             const expected = new Response('ephemeral', 'Successfully added', attachments);
 
