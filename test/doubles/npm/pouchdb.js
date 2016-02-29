@@ -16,8 +16,13 @@ function allDocsDouble (options) {
     }
 }
 
+function infoDouble () {
+    return Bluebird.resolve({ db_name: 'dbDouble', doc_count: 2, update_seq: 3 });
+}
+
 function PouchDBDouble () {
     this.allDocs = allDocsDouble;
+    this.info = infoDouble;
 }
 
 module.exports = PouchDBDouble;

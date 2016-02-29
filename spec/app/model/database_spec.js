@@ -1,7 +1,7 @@
 'use strict';
 
 var proxyquire = require('proxyquire');
-var pouchDBStub = require('../../../test/doubles/node_modules/pouchdb');
+var pouchDBStub = require('../../../test/doubles/npm/pouchdb');
 var Database = proxyquire('../../../model/database', {'pouchdb': pouchDBStub});
 
 describe('Database', () => {
@@ -25,6 +25,24 @@ describe('Database', () => {
 
             // When
             let resultPromise = Database.filterByType('quick');
+
+            // Then
+            resultPromise
+                .then(result => { expect(result).toEqual(expected); done(); });
+        });
+    });
+
+    describe('dbInfo', () => {
+        it('should return information from the database as a collection', (done) => {
+            // Given
+            const expected = [
+                                { db_name: 'dbDouble', doc_count: 2, update_seq: 3 },
+                                { offset: 0, total_rows: 1, rows: [{ id: 'quick/14139', key: 'quick/14139', value: { rev: 'fake-revision' }}]},
+                                { offset: 0, total_rows: 1, rows: [{ id: 'cryptic/26671', key: 'cryptic/26671', value: { rev: 'fake-revision' }}]}
+                             ];
+
+            // When
+            let resultPromise = Database.dbInfo();
 
             // Then
             resultPromise
