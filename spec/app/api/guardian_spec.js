@@ -10,7 +10,7 @@ describe('Guardian', () => {
 
         it('should return a crossword given a valid crossword id', (done) => {
             // Given
-            let expected = require('../../../model/cryptic.json');
+            let expected = require('../../../test/data/cryptic.26671.json');
 
             // When
             let promise = Guardian.scrape('cryptic/26671');
@@ -22,7 +22,7 @@ describe('Guardian', () => {
 
         it('should try again with the \'next\' valid crossword id', (done) => {
             // Given
-            let expected = require('../../../model/cryptic.json');
+            let expected = require('../../../test/data/cryptic.26671.json');
 
             // When
             let resultPromise = Guardian.scrape('cryptic/26670');
