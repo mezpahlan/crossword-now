@@ -24,4 +24,8 @@ function unHashDouble (clueId) {
     }
 }
 
-module.exports = { nextId: nextIdDouble, unHash: unHashDouble };
+function randomIntegerDouble (size) {
+    return size - 1; // Always return the last element in the collection given a size
+}
+
+module.exports = { nextId: nextIdDouble, unHash: unHashDouble, randomInteger: randomIntegerDouble };

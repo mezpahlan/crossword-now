@@ -2,7 +2,8 @@
 
 var proxyquire = require('proxyquire');
 var pouchDBStub = require('../../../test/doubles/npm/pouchdb');
-var Database = proxyquire('../../../model/database', {'pouchdb': pouchDBStub});
+var helperStub = require('../../../test/doubles/controller/helpers');
+var Database = proxyquire('../../../model/database', {'pouchdb': pouchDBStub, '../controller/helpers.js': helperStub});
 
 describe('Database', () => {
 
@@ -43,6 +44,43 @@ describe('Database', () => {
 
             // When
             let resultPromise = Database.dbInfo();
+
+            // Then
+            resultPromise
+                .then(result => { expect(result).toEqual(expected); done(); });
+        });
+    });
+
+    describe('getClue', () => {
+        it('should return a quick clue given an input of \'quick\'', (done) => {
+            // Given
+            const expected = {
+                                id: '23-down',
+                                number: 23,
+                                humanNumber: '23',
+                                clue: 'Wickedness (3)',
+                                direction: 'down',
+                                length: 3,
+                                group: ['23-down'],
+                                position: { x: 10, y: 10 },
+                                separatorLocations: {},
+                                solution: 'SIN',
+                                parentId: 'quick/14139'
+                             };
+
+            // When
+            let resultPromise = Database.getClue('quick');
+
+            // Then
+            resultPromise
+                .then(result => { expect(result).toEqual(expected); done(); });
+        });
+
+        xit('should return a cryptic clue given an input of \'cryptic\'', (done) => {
+            // Given
+
+            // When
+            let resultPromise = Database.getClue('cryptic');
 
             // Then
             resultPromise
