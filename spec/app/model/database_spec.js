@@ -100,4 +100,29 @@ describe('Database', () => {
                 .then(result => { expect(result).toEqual(expected); done(); });
         });
     });
+
+    describe('getAnswer', () => {
+        it('should get an answer given a crossword and clueId', (done) => {
+            // Given
+            const expected = {
+                                id: '1-across',
+                                number: 1,
+                                humanNumber: '1',
+                                clue: 'Sore head from booze, drunk and awake — what now? (5,2)',
+                                direction: 'across',
+                                length: 7,
+                                group: ['1-across'],
+                                position: { x: 0, y: 0 },
+                                separatorLocations: { ',': [5] },
+                                solution: 'SOBERUP'
+                            };
+
+            // When
+            let resultPromise = Database.getAnswer('cryptic/26671', '1-across');
+
+            // Then
+            resultPromise
+                .then(result => { expect(result).toEqual(expected); done(); });
+        });
+    });
 });
