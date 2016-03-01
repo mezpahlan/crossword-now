@@ -37,7 +37,7 @@ function getDouble (crosswordId) {
     crossword._id = crosswordId;
     crossword._rev = 'fake-revision';
 
-    return crossword;
+    return Bluebird.resolve(crossword);
 }
 
 function PouchDBDouble () {
