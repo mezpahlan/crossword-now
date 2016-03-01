@@ -76,8 +76,21 @@ describe('Database', () => {
                 .then(result => { expect(result).toEqual(expected); done(); });
         });
 
-        xit('should return a cryptic clue given an input of \'cryptic\'', (done) => {
+        it('should return a cryptic clue given an input of \'cryptic\'', (done) => {
             // Given
+            const expected = {
+                                id: '22-down',
+                                number: 22,
+                                humanNumber: '22',
+                                clue: 'See 4',
+                                direction: 'down',
+                                length: 4,
+                                group: ['4-down', '22-down'],
+                                position: { x: 14, y: 11 },
+                                separatorLocations: { ',': [] },
+                                solution: 'TALK',
+                                parentId: 'cryptic/26671'
+                            };
 
             // When
             let resultPromise = Database.getClue('cryptic');
