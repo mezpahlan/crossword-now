@@ -41,7 +41,33 @@ function getDouble (crosswordId) {
 }
 
 function putDouble (doc, docId) {
-    return Bluebird.resolve({ ok: true, id: docId, rev: "fake-revision" });
+    return Bluebird.resolve({ ok: true, id: docId, rev: 'fake-revision' });
+}
+
+// TODO: Why can't we use the same PouchDB Double trick with replicate.from???
+
+function fromDouble () {
+    const success = {
+                      doc_write_failures: 0,
+                      docs_read: 2,
+                      docs_written: 2,
+                      end_time: 'fake-timestamp',
+                      errors: [],
+                      last_seq: 2,
+                      ok: true,
+                      start_time: 'fake-timestamp',
+                      status: 'complete'
+                    };
+
+    return Bluebird.resolve(success);
+}
+
+function changesDouble () {
+    return { on: onDouble };
+}
+
+function onDouble () {
+    // Do nothing for now
 }
 
 function PouchDBDouble () {
@@ -49,6 +75,8 @@ function PouchDBDouble () {
     this.info = infoDouble;
     this.get = getDouble;
     this.put = putDouble;
+    this.replicate = { from: fromDouble };
+    this.changes = changesDouble;
 }
 
 module.exports = PouchDBDouble;

@@ -133,11 +133,35 @@ describe('Database', () => {
             const expected = {
                                ok: true,
                                id: 'cryptic/26671',
-                               rev: "fake-revision"
+                               rev: 'fake-revision'
                              };
 
             // When
             let resultPromise = Database.insert(doc, doc.id);
+
+            // Then
+            resultPromise
+                .then(result => { expect(result).toEqual(expected); done(); });
+        });
+    });
+
+    describe('init', () => {
+        it('should intialise the database with all the documents from the remote database', (done) => {
+            // Given
+            const expected = {
+                               doc_write_failures: 0,
+                               docs_read: 2,
+                               docs_written: 2,
+                               end_time: 'fake-timestamp',
+                               errors: [],
+                               last_seq: 2,
+                               ok: true,
+                               start_time: 'fake-timestamp',
+                               status: 'complete'
+                             };
+
+            // When
+            let resultPromise = Database.init();
 
             // Then
             resultPromise
