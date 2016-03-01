@@ -125,4 +125,23 @@ describe('Database', () => {
                 .then(result => { expect(result).toEqual(expected); done(); });
         });
     });
+
+    describe('insert', () => {
+        it('should insert a crossword into the database', (done) => {
+            // Given
+            const doc = require('../../../test/data/cryptic.26671.json');
+            const expected = {
+                               ok: true,
+                               id: 'cryptic/26671',
+                               rev: "fake-revision"
+                             };
+
+            // When
+            let resultPromise = Database.insert(doc, doc.id);
+
+            // Then
+            resultPromise
+                .then(result => { expect(result).toEqual(expected); done(); });
+        });
+    });
 });

@@ -40,10 +40,15 @@ function getDouble (crosswordId) {
     return Bluebird.resolve(crossword);
 }
 
+function putDouble (doc, docId) {
+    return Bluebird.resolve({ ok: true, id: docId, rev: "fake-revision" });
+}
+
 function PouchDBDouble () {
     this.allDocs = allDocsDouble;
     this.info = infoDouble;
     this.get = getDouble;
+    this.put = putDouble;
 }
 
 module.exports = PouchDBDouble;
