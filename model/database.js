@@ -8,83 +8,80 @@ var couchUri = appEnv.getServiceURL('crossword-cloudant').concat('crosswords');
 var localDb = new PouchDB('crosswords');
 var remoteDb = new PouchDB(couchUri);
 
-//
-// Private functions
-//
-var _randomCrosswordId = function (col) {
-    let randomIndex = Helper.randomInteger(col.length);
-    return col[randomIndex].id;
-};
+class Database {
 
-var _getCrossword = function (crosswordId) {
-    return localDb.get(crosswordId);
-};
+    static filterByType (type) {
+        return localDb.allDocs({startkey: type, endkey: type.concat('\uffff')});
+    }
 
-var _randomClue = function (doc) {
-    var randomIndex = Helper.randomInteger(doc.entries.length);
-    return doc.entries[randomIndex];
-};
+    static dbInfo () {
+        return Bluebird.all([localDb.info(), this.filterByType('quick'), this.filterByType('cryptic')]);
+    }
 
-var _clue = function (doc, id) {
-    let index = doc.entries.map(x => x.id).indexOf(id);
-    return doc.entries[index];
-};
+    static getClue (type) {
+        let idx;
+        return this.filterByType(type)
+                    .then(response => this._randomCrosswordId(response.rows))
+                    .then(crosswordId => {
+                        idx = crosswordId;
+                        return this._getCrossword(crosswordId);
+                    })
+                    .then(doc => {
+                        let clue = this._randomClue(doc);
+                        clue.parentId = idx;
+                        return clue;
+                    })
+                    .catch(err => console.log(err));
+    }
 
-//
-// Public functions
-//
-var filterByType = function (type) {
-    return localDb.allDocs({startkey: type, endkey: type.concat('\uffff')});
-};
+    static getAnswer (crossword, id) {
+        return this._getCrossword(crossword)
+                    .then(doc => this._clue(doc, id))
+                    .catch(error => console.log(error));
+    }
 
-var dbInfo = function () {
-    return Bluebird.all([localDb.info(), filterByType('quick'), filterByType('cryptic')]);
-};
+    static insert (doc, id) {
+      return localDb.put(doc, id);
+    }
 
-var getClue = function (type) {
-    let idx;
-    return filterByType(type)
-                .then(response => _randomCrosswordId(response.rows))
-                .then(crosswordId => {
-                    idx = crosswordId;
-                    return _getCrossword(crosswordId);
-                })
-                .then(doc => {
-                    let clue = _randomClue(doc);
-                    clue.parentId = idx;
-                    return clue;
-                })
-                .catch(err => console.log(err));
-};
+    static init () {
+        return new Bluebird(function (resolve, reject) {
+            localDb.replicate.from(remoteDb)
+                    .then(result => {
+                                        localDb.changes({ since: 'now', live: true, include_docs: true })
+                                               .on('change', change => this.replicate());
+                                        resolve(result);
+                                    })
+                    .catch(error => reject(error));
+        });
+    }
 
-var getAnswer = function (crossword, id) {
-    return _getCrossword(crossword)
-                .then(doc => _clue(doc, id))
-                .catch(error => console.log(error));
-};
+    static replicate () {
+        return new Bluebird(function (resolve, reject) {
+            localDb.replicate.to(remoteDb)
+                    .then(result => resolve(result))
+                    .catch(error => reject(error));
+        });
+    }
 
-var insert = function (doc, id) {
-  return localDb.put(doc, id);
-};
+    static _randomCrosswordId (col) {
+        let randomIndex = Helper.randomInteger(col.length);
+        return col[randomIndex].id;
+    }
 
-var init = function () {
-    return new Bluebird(function (resolve, reject) {
-        localDb.replicate.from(remoteDb)
-                .then(result => {
-                                    localDb.changes({ since: 'now', live: true, include_docs: true })
-                                           .on('change', change => replicate());
-                                    resolve(result);
-                                })
-                .catch(error => reject(error));
-    });
-};
+    static _getCrossword (crosswordId) {
+        return localDb.get(crosswordId);
+    }
 
-var replicate = function () {
-    return new Bluebird(function (resolve, reject) {
-        localDb.replicate.to(remoteDb)
-                .then(result => resolve(result))
-                .catch(error => reject(error));
-    });
-};
+    static _randomClue (doc) {
+        var randomIndex = Helper.randomInteger(doc.entries.length);
+        return doc.entries[randomIndex];
+    }
 
-module.exports = {getClue, getAnswer, dbInfo, filterByType, insert, init, replicate};
+    static _clue (doc, id) {
+        let index = doc.entries.map(x => x.id).indexOf(id);
+        return doc.entries[index];
+    }
+}
+
+module.exports = Database;
