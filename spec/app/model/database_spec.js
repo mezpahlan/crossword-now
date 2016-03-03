@@ -168,4 +168,28 @@ describe('Database', () => {
                 .then(result => { expect(result).toEqual(expected); done(); });
         });
     });
+
+    describe('replicate', () => {
+        it('should replicate the localDb to the remoteDb', (done) => {
+            // Given
+            const expected = {
+                               doc_write_failures: 0,
+                               docs_read: 2,
+                               docs_written: 2,
+                               end_time: 'fake-timestamp',
+                               errors: [],
+                               last_seq: 2,
+                               ok: true,
+                               start_time: 'fake-timestamp',
+                               status: 'complete'
+                             };
+
+            // When
+            let resultPromise = Database.replicate();
+
+            // Then
+            resultPromise
+                .then(result => { expect(result).toEqual(expected); done(); });
+        });
+    });
 });
