@@ -64,9 +64,13 @@ class Database {
         });
     }
 
-    static _randomCrosswordId (col) {
-        let randomIndex = Helper.randomInteger(col.length);
-        return col[randomIndex].id;
+    //
+    // TODO: How to declare these functions as private??
+    //
+
+    static _randomCrosswordId (crosswordCollection) {
+        let randomIndex = Helper.randomInteger(crosswordCollection.length);
+        return crosswordCollection[randomIndex].id;
     }
 
     static _getCrossword (crosswordId) {
