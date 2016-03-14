@@ -110,11 +110,6 @@ var add = function (additional) {
 
 var answer = function (clueId) {
     let clueInfo = helpers.unHash(clueId);
-    // TODO: Error scenarios
-    // TODO: 1) Can't unhash in anyway (crossword, id, type). Handle this in the unhash and send error back
-    // TODO: 2) Can unhash but crossword doesn't exist.
-    // TODO: 3) Can unhash but clue doesn't exist.
-    // TODO: Will we get the same error response back from 2) and 3)?? If so, good.
 
     // Call the DB for the answer
     let answer = database.getAnswer(clueInfo.crossword, clueInfo.clue)
