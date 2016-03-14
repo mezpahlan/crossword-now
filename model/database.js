@@ -10,7 +10,6 @@ var remoteDb = new PouchDB(couchUri);
 
 /**
  * Methods for interacting with the local database (PouchDB) and remote database (CouchDB)
- * @namespace
  */
 class Database {
 
