@@ -1,15 +1,16 @@
 {
   "name": "crossword-now",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "description": "Crossword fetching Slack Bot.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "FIX ME WHEN YOU DECIDE TO UNIT TEST"
+    "test": "jasmine",
+    "jsdoc": "jsdoc --configure .jsdocrc"
   },
   "repository": {
     "type": "git",
-    "url": "FIX ME WHEN YOU DECIDE TO SAVE TO GIT"
+    "url": "https://github.com/mezpahlan/crossword-now.git"
   },
   "keywords": [
     "slack",
@@ -28,7 +29,15 @@
     "request-promise": "^1.0.2"
   },
   "engines": {
-    "node": "^4.2.x",
+    "node": "^4.3.x",
     "npm": "^2.14.x"
+  },
+  "devDependencies": {
+    "ink-docstrap": "^1.1.1",
+    "jasmine": "^2.4.1",
+    "jasmine-sinon": "^0.4.0",
+    "jsdoc": "^3.4.0",
+    "proxyquire": "^1.7.4",
+    "sinon": "^1.17.2"
   }
 }

@@ -11,7 +11,7 @@ router.use(bodyParser.urlencoded({
 
 // Routing
 router.post('/', function (req, res) {
-    var text = req.body.text;
+    var text = req.body.text || 'invalidOption';
 
     switch (text) {
         case 'admin/info':
@@ -22,8 +22,14 @@ router.post('/', function (req, res) {
             crossword.add()
                      .then(response => res.send(response));
             break;
+        case (text.match(/^answer\/./) || {}).input:
+            // Help me Hacky-Wan Kenobi... you're my only hope!
+            const clueId = /^answer\/(.+)/.exec(text)[1];
+            crossword.answer(clueId)
+                     .then(response => res.send(response));
+            break;
         case 'cryptic':
-            crossword.now('quick')
+            crossword.now('cryptic')
                      .then(response => res.send(response));
             break;
         case 'quick':

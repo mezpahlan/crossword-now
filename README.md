@@ -8,4 +8,11 @@ Based on the work of David Amey.
 
 Since Bluemix is essentially Cloud Foundry under the covers this should work for Cloud Foundry too. I haven't tested on other platforms so results may vary.
 
-TODO after PouchDB and Promises updates.
+## TODO
+
+- [ ] Document PouchDB and Promises updates.
+- [ ] Error scenarios
+- [ ] Can't unhash in anyway (crossword, id, type). Handle this in the unhash and send error back
+- [ ] Can unhash but crossword doesn't exist.
+- [ ] Can unhash but clue doesn't exist.
+- [ ] Will we get the same error response back from 2) and 3)?? If so, good.
