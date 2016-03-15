@@ -15,8 +15,7 @@ describe('Crossword', () => {
         it('should return usage instructions', (done) => {
             // Given
             const expected = new Response('ephemeral', 'Valid options are `quick` for a quick crossword, ' +
-                             '`cryptic` for a cryptic crossword or leave blank for a quick crossword. ' +
-                             'For an answer type `answer/<clue id>`.');
+                             '`cryptic` for a cryptic crossword. For an answer type `answer/<clue id>`.');
 
             // When
             let resultPromise = Crossword.invalidOption();

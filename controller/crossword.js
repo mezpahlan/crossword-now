@@ -21,8 +21,7 @@ class Crossword {
     static invalidOption () {
         return new Bluebird(function (resolve, reject) {
             let response = new Response('ephemeral', 'Valid options are `quick` for a quick crossword, ' +
-                '`cryptic` for a cryptic crossword or leave blank for a quick crossword. ' +
-                'For an answer type `answer/<clue id>`.');
+                '`cryptic` for a cryptic crossword. For an answer type `answer/<clue id>`.');
             resolve(response);
         });
     }

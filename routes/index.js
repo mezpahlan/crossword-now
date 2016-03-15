@@ -33,7 +33,6 @@ router.post('/', function (req, res) {
                      .then(response => res.send(response));
             break;
         case 'quick':
-        case '':
             crossword.now('quick')
                      .then(response => res.send(response));
             break;

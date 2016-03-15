@@ -84,14 +84,15 @@ class Database {
      * @returns {Promise} Result message of the operation
      */
     static init () {
+        const me = this;
         return new Bluebird(function (resolve, reject) {
             localDb.replicate.from(remoteDb)
-                    .then(result => {
-                                        localDb.changes({ since: 'now', live: true, include_docs: true })
-                                               .on('change', change => this.replicate());
-                                        resolve(result);
-                                    })
-                    .catch(error => reject(error));
+                   .then(result => {
+                                       localDb.changes({ since: 'now', live: true, include_docs: true })
+                                              .on('change', change => me.replicate());
+                                       resolve(result);
+                                   })
+                   .catch(error => reject(error));
         });
     }
 
