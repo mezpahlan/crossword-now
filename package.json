@@ -1,6 +1,6 @@
 {
   "name": "crossword-now",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Crossword fetching Slack Bot.",
   "main": "app.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "cfenv": "^1.0.3",
     "cheerio": "^0.19.0",
     "express": "^4.13.3",
-    "pouchdb": "^5.1.0",
+    "pouchdb": "^6.0.5",
     "request-promise": "^1.0.2"
   },
   "engines": {
